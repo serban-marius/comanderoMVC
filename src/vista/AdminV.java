@@ -226,6 +226,8 @@ public class AdminV extends JFrame{
 		  btnBack.setBounds(10, 351, 599, 29);
 		  panel3.add(btnBack);
 		  
+		  setVisible(true);
+		  
 		 }
 	public JPanel contentPane() {
 		return contentPane;
