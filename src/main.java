@@ -6,8 +6,8 @@ public class main {
 		//InicioC x = new InicioC();
 		//x.generarInicio();
 		
-		AdminC adm = new AdminC();
-		adm.generarAdmin();
+		AdminC x = new AdminC();
+		x.generarAdmin();
 	    
 	}
 	

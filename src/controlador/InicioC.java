@@ -8,5 +8,4 @@ public class InicioC {
 	public static void generarInicio(){
 		vista = new InicioV();
 	}
-	
 }

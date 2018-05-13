@@ -30,7 +30,7 @@ public class InicioV extends JFrame {
 		setVisible(true);
 	}
 	
-	public JPanel getContentPane() {
+	public JPanel ContentPane() {
 		return contentPane;
 	}
 
