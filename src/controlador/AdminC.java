@@ -7,5 +7,6 @@ public class AdminC {
 	
 	public static void generarAdmin(){
 		vista = new AdminV();
+		// Eventos de la ventana
 	}
 }

@@ -49,6 +49,7 @@ public class AdminV extends JFrame{
 	private JButton btnYesProd;
 	private JButton btnNoProd;
 	private JButton btnBack;
+	private JButton btnDelSelection;
 	
 	public AdminV() {
 		  
@@ -130,7 +131,7 @@ public class AdminV extends JFrame{
 		  panel2.add(btnAddSaveCat);
 		  
 		  scrollPaneCat = new JScrollPane();
-		  scrollPaneCat.setBounds(10, 61, 599, 278);
+		  scrollPaneCat.setBounds(10, 91, 599, 248);
 		  panel2.add(scrollPaneCat);
 		  
 		  tableCat = new JTable();
@@ -151,6 +152,10 @@ public class AdminV extends JFrame{
 		  btnDelCat = new JButton("Eliminar");
 		  btnDelCat.setBounds(446, 7, 163, 48);
 		  panel2.add(btnDelCat);
+		  
+		  btnDelSelection = new JButton("Borrar seleccion");
+		  btnDelSelection.setBounds(10, 61, 599, 23);
+		  panel2.add(btnDelSelection);
 		  
 		  //---------------------------------------------
 		  
@@ -335,5 +340,8 @@ public class AdminV extends JFrame{
 	}
 	public JButton btnBack() {
 		return btnBack;
+	}
+	public JButton btnDelSelection() {
+		return btnDelSelection;
 	}
 }
