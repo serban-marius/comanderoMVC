@@ -9,10 +9,13 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import model.AdminM;
 
 public class AdminV extends JFrame{
 
@@ -77,20 +80,8 @@ public class AdminV extends JFrame{
 		  panel1.add(scrollPaneMesas);
 		  
 		  tablaMesas = new JTable();
+		  tablaMesas.setModel(AdminM.getModelMesas());
 		  scrollPaneMesas.setViewportView(tablaMesas);
-		  tablaMesas.setModel(new DefaultTableModel(
-		  	new Object[][] {
-		  		{null, null, null},
-		  		{null, null, null},
-		  		{null, null, null},
-		  		{null, null, null},
-		  		{null, null, null},
-		  		{null, null, null},
-		  	},
-		  	new String[] {
-		  		"New column", "New column", "New column"
-		  	}
-		  ));
 		  
 		  //---------------------------------------------
 		  
