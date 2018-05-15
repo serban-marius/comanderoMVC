@@ -96,4 +96,7 @@ public class NuevoEditarProductoV extends JFrame {
 	public JButton btnVolver() {
 		return btnVolver;
 	}
+	public JComboBox<String> comboBox(){
+		return comboBox;
+	}
 }

@@ -205,7 +205,7 @@ public class AdminV extends JFrame{
 	public JScrollPane scrollPaneMesas() {
 		return scrollPaneMesas;
 	}
-	public JButton btnAddSaveCat() {
+	public JButton btnEditCat() {
 		return btnEditCat;
 	}
 	public JScrollPane scrollPaneCat() {
@@ -217,7 +217,7 @@ public class AdminV extends JFrame{
 	public JButton btnDelCat() {
 		return btnDelCat;
 	}
-	public JButton btnSaveEditProd() {
+	public JButton btnEditProd() {
 		return btnEditProd;
 	}
 	public JScrollPane scrollPaneTablaProd() {

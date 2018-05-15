@@ -3,16 +3,18 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import vista.NuevoEditarCategoriaV;
 import vista.NuevoEditarProductoV;
+import model.NuevoEditarProductoM;
 
 public class NuevoEditarProductoC {
 	private static NuevoEditarProductoV newProd = null;
 	private static int stock = 0;
+	private static int idProd = 0;
 	private static double precio = 0.0;
 	private static String nombre = "";
 	private static String preciostring = "";
 	private static String stockstring = "";
+	private static int categoria = 0;
 	
 	public static void nuevoProd() {
 		newProd = new NuevoEditarProductoV();
@@ -25,15 +27,46 @@ public class NuevoEditarProductoC {
 				cerrarVista();
 			}
 		});
-		// ----- BOTON GUARDAR CATEGORÍA
+		// ----- BOTON GUARDAR PRODUCTO
 		newProd.btnSave().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				nombre = newProd.tfNombre().getText();
 				preciostring = newProd.tfPrecio().getText();
 				stockstring = newProd.tfStock().getText();
+				categoria = newProd.comboBox().getSelectedIndex();
 				converToInt(preciostring, stockstring);
-				//Llamada a metodo del Modelo para introducir en BD
+				NuevoEditarProductoM.newProd(nombre,stock,precio,categoria);
+			}
+		});
+	}
+	
+	public static void editProd(int id) {
+		newProd = new NuevoEditarProductoV();
+		newProd.tfNombre().setText(NuevoEditarProductoM.nombreProd());
+		newProd.tfStock().setText(NuevoEditarProductoM.stockProducto());
+		newProd.tfPrecio().setText(NuevoEditarProductoM.precioProducto());
+		newProd.comboBox().setSelectedIndex(NuevoEditarProductoM.idCat());
+		idProd = id;
+		
+		//Eventos de la ventana
+		// ---- BOTON VOLVER ----------
+		newProd.btnVolver().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cerrarVista();
+			}
+		});
+		// ----- BOTON EDITAR PRODUCTO
+		newProd.btnSave().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				nombre = newProd.tfNombre().getText();
+				preciostring = newProd.tfPrecio().getText();
+				stockstring = newProd.tfStock().getText();
+				categoria = newProd.comboBox().getSelectedIndex();
+				converToInt(preciostring, stockstring);
+				NuevoEditarProductoM.editProd(nombre, stock,  precio, categoria, idProd);
 			}
 		});
 	}

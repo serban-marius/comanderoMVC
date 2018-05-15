@@ -16,11 +16,7 @@ public class NuevoEditarCategoriaM {
 		//Metodo para editar nombre de una categoria
 	}
 	
-	public static void newCat(int id, String newCat) {
+	public static void newCat(String newCat) {
 		//Metodo para crear una nueva categoria
-	}
-	
-	public static void delCat(int id) {
-		//Metodo para eliminar categoria
 	}
 }

@@ -26,7 +26,7 @@ public class NuevoEditarCategoriaC {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				nombreNuevaCat = nuevaCate.textNewCat().getText();
-				NuevoEditarCategoriaM.newCat(1 ,nombreNuevaCat);
+				NuevoEditarCategoriaM.newCat(nombreNuevaCat);
 			}
 		});
 	}
@@ -44,7 +44,7 @@ public class NuevoEditarCategoriaC {
 				cerrarVista();
 			}
 		});
-		// ----- BOTON GUARDAR CATEGORÍA
+		// ----- BOTON EDITAR CATEGORÍA
 		nuevaCate.btnSaveNewCategory().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
