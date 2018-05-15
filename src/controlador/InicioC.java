@@ -9,8 +9,10 @@ import vista.InicioV;
 
 public class InicioC {
 	private static InicioV vista = null;
-	private static AdminC admin = new AdminC();
-	private static CobroC cobro = new CobroC();
+	
+	public static void main(String[] args) {
+		generarInicio();
+	}
 	
 	public static void generarInicio(){
 		vista = new InicioV();
@@ -18,15 +20,14 @@ public class InicioC {
 			vista.btnAdmin().addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					cerrarVista();
-					admin.generarAdmin();
+					AdminC.generarAdmin();
 				}
 			});
 			vista.btnCobro().addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					cerrarVista();
-					cobro.generarCobro();
+					CobroC.generarCobro();
 				}
 			});
 	}

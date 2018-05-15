@@ -10,6 +10,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
 
 public class AdminV extends JFrame{
 
@@ -20,36 +23,23 @@ public class AdminV extends JFrame{
 	private JPanel panel3;
 	private JTabbedPane panelDePestanas;
 	private JTable tablaMesas;
-	private JTextField textFieldNameCat;
 	private JTable tableCat;
-	private JTextField textFieldNombre;
-	private JTextField textFieldPrecio;
-	private JTextField textFieldStock;
 	private JTable tableProductos;
 	private JButton backButtonMesa;
 	private JButton btnAddMesa;
 	private JButton btnDelMesa;
 	private JScrollPane scrollPaneMesas;
-	private JLabel lblNameCat;
-	private JLabel lblImagen;
-	private JButton btnSelectImg;
-	private JButton btnAddSaveCat;
+	private JButton btnEditCat;
 	private JScrollPane scrollPaneCat;
 	private JButton btnBackCat;
 	private JButton btnDelCat;
-	private JLabel lblNombre;
-	private JLabel lblPrecio;
-	private JLabel lblStock;
-	private JLabel lblImagen_1;
-	private JButton btnSelectImag;
-	private JButton btnSaveEditProd;
+	private JButton btnEditProd;
 	private JScrollPane scrollPaneTablaProd;
 	private JButton btnDelProd;
-	private JLabel lblseguro;
-	private JButton btnYesProd;
-	private JButton btnNoProd;
 	private JButton btnBack;
-	private JButton btnDelSelection;
+	private JButton btnNewCategory;
+	private JButton btnNewProduct;
+	private JComboBox<?> comboBox;
 	
 	public AdminV() {
 		  
@@ -106,32 +96,15 @@ public class AdminV extends JFrame{
 		  
 		  //Segunda pestaña CATEGORIAS
 		  panel2 = new JPanel();
-		  panelDePestanas.addTab("Categorias", null, panel2, null);
+		  panelDePestanas.addTab("Categor\u00EDas", null, panel2, null);
 		  panel2.setLayout(null);
 		  
-		  lblNameCat = new JLabel("Nombre ");
-		  lblNameCat.setBounds(10, 11, 46, 14);
-		  panel2.add(lblNameCat);
-		  
-		  textFieldNameCat = new JTextField();
-		  textFieldNameCat.setBounds(66, 8, 173, 20);
-		  panel2.add(textFieldNameCat);
-		  textFieldNameCat.setColumns(10);
-		  
-		  lblImagen = new JLabel("Imagen");
-		  lblImagen.setBounds(10, 36, 46, 14);
-		  panel2.add(lblImagen);
-		  
-		  btnSelectImg = new JButton("Seleccionar Imagen");
-		  btnSelectImg.setBounds(66, 32, 173, 23);
-		  panel2.add(btnSelectImg);
-		  
-		  btnAddSaveCat = new JButton("A\u00F1adir/Modificar");
-		  btnAddSaveCat.setBounds(261, 7, 163, 48);
-		  panel2.add(btnAddSaveCat);
+		  btnEditCat = new JButton("Editar Categor\u00EDa");
+		  btnEditCat.setBounds(226, 295, 169, 48);
+		  panel2.add(btnEditCat);
 		  
 		  scrollPaneCat = new JScrollPane();
-		  scrollPaneCat.setBounds(10, 91, 599, 248);
+		  scrollPaneCat.setBounds(10, 11, 599, 273);
 		  panel2.add(scrollPaneCat);
 		  
 		  tableCat = new JTable();
@@ -149,13 +122,13 @@ public class AdminV extends JFrame{
 		  btnBackCat.setBounds(10, 350, 599, 30);
 		  panel2.add(btnBackCat);
 		  
-		  btnDelCat = new JButton("Eliminar");
-		  btnDelCat.setBounds(446, 7, 163, 48);
+		  btnDelCat = new JButton("Eliminar Categor\u00EDa");
+		  btnDelCat.setBounds(440, 295, 169, 48);
 		  panel2.add(btnDelCat);
 		  
-		  btnDelSelection = new JButton("Borrar seleccion");
-		  btnDelSelection.setBounds(10, 61, 599, 23);
-		  panel2.add(btnDelSelection);
+		  btnNewCategory = new JButton("Categor\u00EDa Nueva");
+		  btnNewCategory.setBounds(10, 295, 169, 48);
+		  panel2.add(btnNewCategory);
 		  
 		  //---------------------------------------------
 		  
@@ -164,72 +137,32 @@ public class AdminV extends JFrame{
 		  panelDePestanas.addTab("Productos", null, panel3, null);
 		  panel3.setLayout(null);
 		  
-		  lblNombre = new JLabel("Nombre");
-		  lblNombre.setBounds(10, 11, 46, 14);
-		  panel3.add(lblNombre);
-		  
-		  lblPrecio = new JLabel("Precio");
-		  lblPrecio.setBounds(10, 36, 46, 14);
-		  panel3.add(lblPrecio);
-		  
-		  lblStock = new JLabel("Stock");
-		  lblStock.setBounds(225, 11, 46, 14);
-		  panel3.add(lblStock);
-		  
-		  lblImagen_1 = new JLabel("Imagen");
-		  lblImagen_1.setBounds(225, 36, 46, 14);
-		  panel3.add(lblImagen_1);
-		  
-		  textFieldNombre = new JTextField();
-		  textFieldNombre.setBounds(54, 8, 161, 20);
-		  panel3.add(textFieldNombre);
-		  textFieldNombre.setColumns(10);
-		  
-		  textFieldPrecio = new JTextField();
-		  textFieldPrecio.setBounds(54, 33, 161, 20);
-		  panel3.add(textFieldPrecio);
-		  textFieldPrecio.setColumns(10);
-		  
-		  textFieldStock = new JTextField();
-		  textFieldStock.setBounds(281, 8, 161, 20);
-		  panel3.add(textFieldStock);
-		  textFieldStock.setColumns(10);
-		  
-		  btnSelectImag = new JButton("Seleccionar Imagen");
-		  btnSelectImag.setBounds(281, 32, 161, 23);
-		  panel3.add(btnSelectImag);
-		  
-		  btnSaveEditProd = new JButton("Guardar/Editar");
-		  btnSaveEditProd.setBounds(452, 7, 157, 46);
-		  panel3.add(btnSaveEditProd);
+		  btnEditProd = new JButton("Editar Producto");
+		  btnEditProd.setBounds(221, 298, 165, 46);
+		  panel3.add(btnEditProd);
 		  
 		  scrollPaneTablaProd = new JScrollPane();
-		  scrollPaneTablaProd.setBounds(10, 61, 599, 239);
+		  scrollPaneTablaProd.setBounds(10, 50, 599, 237);
 		  panel3.add(scrollPaneTablaProd);
 		  
 		  tableProductos = new JTable();
 		  scrollPaneTablaProd.setViewportView(tableProductos);
 		  
 		  btnDelProd = new JButton("Eliminar Producto");
-		  btnDelProd.setBounds(73, 311, 142, 29);
+		  btnDelProd.setBounds(444, 298, 165, 46);
 		  panel3.add(btnDelProd);
-		  
-		  lblseguro = new JLabel("\u00BFSeguro?");
-		  lblseguro.setForeground(Color.RED);
-		  lblseguro.setBounds(260, 318, 46, 14);
-		  panel3.add(lblseguro);
-		  
-		  btnYesProd = new JButton("SI");
-		  btnYesProd.setBounds(316, 311, 113, 29);
-		  panel3.add(btnYesProd);
-		  
-		  btnNoProd = new JButton("NO");
-		  btnNoProd.setBounds(452, 311, 113, 29);
-		  panel3.add(btnNoProd);
 		  
 		  btnBack = new JButton("Volver");
 		  btnBack.setBounds(10, 351, 599, 29);
 		  panel3.add(btnBack);
+		  
+		  btnNewProduct = new JButton("Producto Nuevo");
+		  btnNewProduct.setBounds(10, 298, 165, 46);
+		  panel3.add(btnNewProduct);
+		  
+		  comboBox = new JComboBox<String>();
+		  comboBox.setBounds(10, 11, 599, 28);
+		  panel3.add(comboBox);
 		  
 		  setVisible(true);
 		  
@@ -254,20 +187,8 @@ public class AdminV extends JFrame{
 	public JTable tablaMesas() {
 		return tablaMesas;
 	}
-	public JTextField textFieldNameCat() {
-		return textFieldNameCat;
-	}
 	public JTable tableCat() {
 		return tableCat;
-	}
-	public JTextField textFieldNombre() {
-		return textFieldNombre;
-	}
-	public JTextField textFieldPrecio() {
-		return textFieldPrecio;
-	}
-	public JTextField textFieldStock() {
-		return textFieldStock;
 	}
 	public JTable tableProductos() {
 		return tableProductos;
@@ -284,17 +205,8 @@ public class AdminV extends JFrame{
 	public JScrollPane scrollPaneMesas() {
 		return scrollPaneMesas;
 	}
-	public JLabel lblNameCat() {
-		return lblNameCat;
-	}
-	public JLabel lblImagen() {
-		return lblImagen;
-	}
-	public JButton btnSelectImg() {
-		return btnSelectImg;
-	}
 	public JButton btnAddSaveCat() {
-		return btnAddSaveCat;
+		return btnEditCat;
 	}
 	public JScrollPane scrollPaneCat() {
 		return scrollPaneCat;
@@ -305,23 +217,8 @@ public class AdminV extends JFrame{
 	public JButton btnDelCat() {
 		return btnDelCat;
 	}
-	public JLabel lblNombre() {
-		return lblNombre;
-	}
-	public JLabel lblPrecio() {
-		return lblPrecio;
-	}
-	public JLabel lblStock() {
-		return lblStock;
-	}
-	public JLabel lblImagen_1() {
-		return lblImagen_1;
-	}
-	public JButton btnSelectImag() {
-		return btnSelectImag;
-	}
 	public JButton btnSaveEditProd() {
-		return btnSaveEditProd;
+		return btnEditProd;
 	}
 	public JScrollPane scrollPaneTablaProd() {
 		return scrollPaneTablaProd;
@@ -329,19 +226,16 @@ public class AdminV extends JFrame{
 	public JButton btnDelProd() {
 		return btnDelProd;
 	}
-	public JLabel lblseguro() {
-		return lblseguro;
-	}
-	public JButton btnYesProd() {
-		return btnYesProd;
-	}
-	public JButton btnNoProd() {
-		return btnNoProd;
-	}
 	public JButton btnBack() {
 		return btnBack;
 	}
-	public JButton btnDelSelection() {
-		return btnDelSelection;
+	public JButton btnNewCategory() {
+		return btnNewCategory;
+	}
+	public JButton btnNewProduct() {
+		return btnNewCategory;
+	}
+	public JComboBox<?> comboBox() {
+		return comboBox;
 	}
 }
