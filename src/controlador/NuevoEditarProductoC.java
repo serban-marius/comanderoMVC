@@ -7,6 +7,7 @@ import vista.NuevoEditarProductoV;
 import model.NuevoEditarProductoM;
 
 public class NuevoEditarProductoC {
+	
 	private static NuevoEditarProductoV newProd = null;
 	private static int stock = 0;
 	private static int idProd = 0;
@@ -43,6 +44,7 @@ public class NuevoEditarProductoC {
 	
 	public static void editProd(int id) {
 		newProd = new NuevoEditarProductoV();
+		
 		newProd.tfNombre().setText(NuevoEditarProductoM.nombreProd());
 		newProd.tfStock().setText(NuevoEditarProductoM.stockProducto());
 		newProd.tfPrecio().setText(NuevoEditarProductoM.precioProducto());

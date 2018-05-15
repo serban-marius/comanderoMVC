@@ -5,6 +5,7 @@ import controlador.CobroC;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import controlador.NuevoEditarProductoC;
 import vista.InicioV;
 
 public class InicioC {

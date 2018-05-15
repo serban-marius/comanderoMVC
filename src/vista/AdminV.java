@@ -233,7 +233,7 @@ public class AdminV extends JFrame{
 		return btnNewCategory;
 	}
 	public JButton btnNewProduct() {
-		return btnNewCategory;
+		return btnNewProduct;
 	}
 	public JComboBox<?> comboBox() {
 		return comboBox;

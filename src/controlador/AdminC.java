@@ -80,12 +80,13 @@ public class AdminC {
 		//---------------------------------------------------------------
 		
 		// --------------------- BOTONES PRODUCTOS ----------------------
-		//Boton Nuevo Producto -- BORRA SELECCIÓN TABLA --
-		vista.btnNewProduct().addActionListener(new ActionListener(){
+		//Boton Nuevo Producto
+		vista.btnNewProduct().addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				NuevoEditarProductoC.nuevoProd();
-			}
+		  	public void actionPerformed(ActionEvent e) {
+				System.out.println("hey");
+		  		NuevoEditarProductoC.nuevoProd();
+		  	}
 		});
 		//Boton Eliminar Producto
 		vista.btnDelProd().addActionListener(new ActionListener(){
@@ -98,7 +99,7 @@ public class AdminC {
 		vista.btnEditProd().addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				NuevoEditarProductoC.editProd();
+				NuevoEditarProductoC.editProd(0);
 			}
 		});
 		

@@ -68,10 +68,6 @@ public class NuevoEditarProductoV extends JFrame {
 		contentPane.add(comboBox);
 		
 		btnSave = new JButton("Guardar");
-		btnSave.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnSave.setBounds(10, 61, 237, 56);
 		contentPane.add(btnSave);
 		
