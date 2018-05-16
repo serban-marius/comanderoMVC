@@ -75,14 +75,14 @@ public class AdminC {
 		vista.btnDelCat().addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AdminM.delCat(NuevoEditarCategoriaM.numeroCat());
+				AdminM.delCat(getIdCat());
 			}
 		});
 		//Botón Modificar Categoría
 		vista.btnEditCat().addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				NuevoEditarCategoriaC.editCat(NuevoEditarCategoriaM.numeroCat(), NuevoEditarCategoriaM.nombreCat());
+				NuevoEditarCategoriaC.editCat(getIdCat(), NuevoEditarCategoriaM.nombreCat());
 			}
 		});
 		
@@ -122,13 +122,25 @@ public class AdminC {
 		AdminV.tablaMesas().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 		    @Override
 		    public void valueChanged(ListSelectionEvent event) {
-		        if (AdminV.tablaMesas().getSelectedRow() > -1) {
-		            // print first column value from selected row
-		        	String numero = AdminV.tablaMesas().getValueAt(AdminV.tablaMesas().getSelectedRow(), 0).toString();
-		        	id = Integer.parseInt(numero);
-		        }
+		        String numero = AdminV.tablaMesas().getValueAt(AdminV.tablaMesas().getSelectedRow(), 0).toString();
+		        id = Integer.parseInt(numero);
+		        
 		    }
 		});
+		return id;
+	}
+	private static Integer getIdCat() {
+		AdminV.tableCat().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+		    @Override
+		    public void valueChanged(ListSelectionEvent event) {
+		    	try {
+		        id = (int) AdminV.tableCat().getValueAt(AdminV.tableCat().getSelectedRow(), 0);
+		    	}catch (Exception exe) {
+		    		
+		    	}
+		    }
+		});
+		System.out.println(id);
 		return id;
 	}
 }

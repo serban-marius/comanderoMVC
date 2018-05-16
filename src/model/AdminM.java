@@ -103,7 +103,6 @@ public class AdminM {
 		String sql = null;
 		int nextId;
 		
-		conexionDB.openConnection();
 		try {
 			nextId = (int) tableModel.getValueAt(tableModel.getRowCount() - 1, 0) + 1;
 			sql = "insert into " + conexionDB.getDatabase() + ".mesa values (" + nextId + ", 'LIBRE', '0')";
@@ -111,6 +110,7 @@ public class AdminM {
 			sql = "insert into " + conexionDB.getDatabase() + ".mesa values (1, 'LIBRE', '0')";
 		}
 		
+		conexionDB.openConnection();
 		Statement statement = null;
 		try {
 			statement = conexionDB.getConnection().createStatement();
@@ -125,7 +125,6 @@ public class AdminM {
 	}
 	
 	public static void delMesa(int id) {
-		System.out.println(id);
 		String sql = "delete from " + conexionDB.getDatabase() + ".mesa where id_mesa = " + id;
 		conexionDB.openConnection();
 		Statement statement = null;
@@ -134,15 +133,26 @@ public class AdminM {
 			statement.executeUpdate(sql);
 			AdminV.tablaMesas().setModel(getModelMesas());
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 		    try { if (statement != null) statement.close(); } catch (Exception e) {};
 		    try { if (conexionDB.getConnection() != null) conexionDB.closeConnection(); } catch (Exception e) {};
 		}
 	}
 	
-	public static void delCat(int id) {
-		//Metodo para eliminar categoria
+	public static void delCat(Integer id) {
+		String sql = "delete from " + conexionDB.getDatabase() + ".categorias where id = " + id;
+		conexionDB.openConnection();
+		Statement statement = null;
+		try {
+			statement = conexionDB.getConnection().createStatement();
+			statement.executeUpdate(sql);
+			AdminV.tableCat().setModel(AdminM.getModelCategorias());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+		    try { if (statement != null) statement.close(); } catch (Exception e) {};
+		    try { if (conexionDB.getConnection() != null) conexionDB.closeConnection(); } catch (Exception e) {};
+		}
 	}
 	
 	public static void delProd(int id) {

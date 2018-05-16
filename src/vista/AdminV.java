@@ -171,10 +171,10 @@ public class AdminV extends JFrame{
 	public static JTable tablaMesas() {
 		return tablaMesas;
 	}
-	public JTable tableCat() {
+	public static JTable tableCat() {
 		return tableCat;
 	}
-	public JTable tableProductos() {
+	public static JTable tableProductos() {
 		return tableProductos;
 	}
 	public JButton backButtonMesa() {
