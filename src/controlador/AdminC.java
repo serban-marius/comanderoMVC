@@ -3,6 +3,11 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 import vista.AdminV;
 import model.AdminM;
 import controlador.NuevoEditarProductoC;
@@ -12,9 +17,11 @@ import model.NuevoEditarProductoM;
 
 public class AdminC {
 	private static AdminV vista = null;
+	private static Integer id = null;
 	
 	public static void generarAdmin(){
 		vista = new AdminV();
+		getId();
 		// Eventos de la ventana
 		// ----------------------- BOTONES VOLVER (HECHO) --------------------------
 		vista.btnBack().addActionListener(new ActionListener(){
@@ -43,15 +50,17 @@ public class AdminC {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				AdminM.addMesa();
+				vista.revalidate();
 			}
 		});
 		//Botón Eliminar Mesa
 		vista.btnDelMesa().addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AdminM.delMesa();
+				AdminM.delMesa(getId());
 			}
 		});
+		
 		// ---------------------------------------------------------------
 		
 		// ---------------------- BOTONES CATEGORIAS ---------------------
@@ -108,5 +117,18 @@ public class AdminC {
 	
 	private static void cerrarVista() {
 		vista.dispose();
+	}
+	private static Integer getId() {
+		AdminV.tablaMesas().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+		    @Override
+		    public void valueChanged(ListSelectionEvent event) {
+		        if (AdminV.tablaMesas().getSelectedRow() > -1) {
+		            // print first column value from selected row
+		        	String numero = AdminV.tablaMesas().getValueAt(AdminV.tablaMesas().getSelectedRow(), 0).toString();
+		        	id = Integer.parseInt(numero);
+		        }
+		    }
+		});
+		return id;
 	}
 }

@@ -25,9 +25,9 @@ public class AdminV extends JFrame{
 	private JPanel panel2;
 	private JPanel panel3;
 	private JTabbedPane panelDePestanas;
-	private JTable tablaMesas;
-	private JTable tableCat;
-	private JTable tableProductos;
+	private static JTable tablaMesas;
+	public static JTable tableCat;
+	private static JTable tableProductos;
 	private JButton backButtonMesa;
 	private JButton btnAddMesa;
 	private JButton btnDelMesa;
@@ -99,14 +99,7 @@ public class AdminV extends JFrame{
 		  panel2.add(scrollPaneCat);
 		  
 		  tableCat = new JTable();
-		  tableCat.setModel(new DefaultTableModel(
-		  	new Object[][] {
-		  		{null, null},
-		  	},
-		  	new String[] {
-		  		"New column", "New column"
-		  	}
-		  ));
+		  tableCat.setModel(AdminM.getModelCategorias());
 		  scrollPaneCat.setViewportView(tableCat);
 		  
 		  btnBackCat = new JButton("Volver");
@@ -175,7 +168,7 @@ public class AdminV extends JFrame{
 	public JTabbedPane panelDePestanas() {
 		return panelDePestanas;
 	}
-	public JTable tablaMesas() {
+	public static JTable tablaMesas() {
 		return tablaMesas;
 	}
 	public JTable tableCat() {
