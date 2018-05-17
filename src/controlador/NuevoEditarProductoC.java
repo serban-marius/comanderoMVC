@@ -17,7 +17,7 @@ public class NuevoEditarProductoC {
 	private static String stockstring = "";
 	private static int categoria = 0;
 	
-	public static void nuevoProd() {
+	public void nuevoProd() {
 		newProd = new NuevoEditarProductoV();
 		
 		//Eventos de la ventana
@@ -42,7 +42,7 @@ public class NuevoEditarProductoC {
 		});
 	}
 	
-	public static void editProd(int id) {
+	public void editProd(int id) {
 		newProd = new NuevoEditarProductoV();
 		
 		newProd.tfNombre().setText(NuevoEditarProductoM.nombreProd());

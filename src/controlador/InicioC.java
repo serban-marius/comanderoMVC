@@ -4,36 +4,42 @@ import controlador.AdminC;
 import controlador.CobroC;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import controlador.NuevoEditarProductoC;
 import vista.InicioV;
 
 public class InicioC {
 	private static InicioV vista = null;
-	
 	public static void main(String[] args) {
-		generarInicio();
+		generarVentana();
 	}
 	
-	public static void generarInicio(){
+	public InicioC() {
+		generarVentana();
+	}
+	
+	public static void generarVentana() {
 		vista = new InicioV();
-		// Eventos de la ventana
-			vista.btnAdmin().addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					AdminC.generarAdmin();
-				}
-			});
-			vista.btnCobro().addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					cerrarVista();
-					CobroC.generarCobro();
-				}
-			});
+		
+		vista.btnAdmin().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new AdminC().generarAdmin();;
+			}
+		});
+		
+		
+		vista.btnCobro().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cerrarVista();
+				new CobroC().generarCobro();;
+			}
+		});
+		
 	}
-	
 	public static void cerrarVista() {
 		vista.dispose();
 	}
+	
+	
 }
+

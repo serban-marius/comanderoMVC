@@ -2,7 +2,7 @@ package model;
 
 public class NuevoEditarProductoM {
 	
-	public static int idProd() {
+	public int idProd() {
 		//Metodo para sacar id Producto de la BD
 		return 1;
 	}

@@ -10,7 +10,9 @@ import javax.swing.table.TableModel;
 import vista.AdminV;
 
 public class AdminM {
-	public static TableModel getModelMesas() {
+	private AdminV vista = null;
+	
+	public TableModel getModelMesas() {
 		String[] columnasModel = {"ID", "Estado", "Total Cuenta"};
 		DefaultTableModel model = new DefaultTableModel(null, columnasModel) {
 			private static final long serialVersionUID = 1L;
@@ -54,7 +56,7 @@ public class AdminM {
 		
 		return model;
 	}
-	public static TableModel getModelCategorias() {
+	public TableModel getModelCategorias() {
 		String[] columnasModel = {"ID", "Nombre"};
 		DefaultTableModel model = new DefaultTableModel(null, columnasModel) {
 			private static final long serialVersionUID = 1L;
@@ -98,8 +100,8 @@ public class AdminM {
 		return model;
 	}
 
-	public static void addMesa() {
-		TableModel tableModel = AdminM.getModelMesas();
+	public void addMesa() {
+		TableModel tableModel = getModelMesas();
 		String sql = null;
 		int nextId;
 		
@@ -115,7 +117,6 @@ public class AdminM {
 		try {
 			statement = conexionDB.getConnection().createStatement();
 			statement.executeUpdate(sql);
-			AdminV.tablaMesas().setModel(getModelMesas());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -124,14 +125,13 @@ public class AdminM {
 		}
 	}
 	
-	public static void delMesa(int id) {
+	public void delMesa(int id) {
 		String sql = "delete from " + conexionDB.getDatabase() + ".mesa where id_mesa = " + id;
 		conexionDB.openConnection();
 		Statement statement = null;
 		try {
 			statement = conexionDB.getConnection().createStatement();
 			statement.executeUpdate(sql);
-			AdminV.tablaMesas().setModel(getModelMesas());
 		} catch (SQLException e) {
 		} finally {
 		    try { if (statement != null) statement.close(); } catch (Exception e) {};
@@ -139,23 +139,32 @@ public class AdminM {
 		}
 	}
 	
-	public static void delCat(Integer id) {
+	public void delCat(int id) {
 		String sql = "delete from " + conexionDB.getDatabase() + ".categorias where id = " + id;
 		conexionDB.openConnection();
 		Statement statement = null;
 		try {
 			statement = conexionDB.getConnection().createStatement();
 			statement.executeUpdate(sql);
-			AdminV.tableCat().setModel(AdminM.getModelCategorias());
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 		    try { if (statement != null) statement.close(); } catch (Exception e) {};
 		    try { if (conexionDB.getConnection() != null) conexionDB.closeConnection(); } catch (Exception e) {};
 		}
 	}
 	
-	public static void delProd(int id) {
-		//Metodo para eliminar producto
+	public void delProd(int id) {
+		String sql = "delete from " + conexionDB.getDatabase() + ".categorias where id = " + id;
+		conexionDB.openConnection();
+		Statement statement = null;
+		try {
+			statement = conexionDB.getConnection().createStatement();
+			statement.executeUpdate(sql);
+			vista.tablaMesas().setModel(getModelMesas());
+		} catch (SQLException e) {
+		} finally {
+		    try { if (statement != null) statement.close(); } catch (Exception e) {};
+		    try { if (conexionDB.getConnection() != null) conexionDB.closeConnection(); } catch (Exception e) {};
+		}
 	}
 }

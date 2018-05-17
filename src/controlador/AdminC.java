@@ -3,10 +3,7 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 import vista.AdminV;
 import model.AdminM;
@@ -16,13 +13,26 @@ import model.NuevoEditarCategoriaM;
 import model.NuevoEditarProductoM;
 
 public class AdminC {
-	private static AdminV vista = null;
-	private static Integer id = null;
+	private AdminV vista = null;
+	private AdminM model = null;
+	private NuevoEditarCategoriaC editCat = null;
+	private NuevoEditarCategoriaM editCatM = null;
+	private NuevoEditarProductoC editProd = null;
+	private NuevoEditarProductoM editProdM = null;
+	private Integer idMesa = null;
+	private Integer idCat = null;
+	private Integer idProd = null;
 	
-	public static void generarAdmin(){
+	public void generarAdmin(){
+		model = new AdminM();
 		vista = new AdminV();
-		getId();
+		editCat = new NuevoEditarCategoriaC();
+		editCatM = new NuevoEditarCategoriaM();
+		editProd = new NuevoEditarProductoC();
+		editProdM = new NuevoEditarProductoM();
+		
 		// Eventos de la ventana
+		
 		// ----------------------- BOTONES VOLVER (HECHO) --------------------------
 		vista.btnBack().addActionListener(new ActionListener(){
 			@Override
@@ -49,15 +59,21 @@ public class AdminC {
 		vista.btnAddMesa().addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AdminM.addMesa();
-				vista.revalidate();
+				model.addMesa();
+				vista.tablaMesas().setModel(model.getModelMesas());
 			}
 		});
 		//Botón Eliminar Mesa
 		vista.btnDelMesa().addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AdminM.delMesa(getId());
+				DefaultTableModel tableModel = (DefaultTableModel) vista.tablaMesas().getModel();
+
+				idMesa = (int) tableModel.getValueAt(vista.tablaMesas().getSelectedRow(), 0);
+				
+				model.delMesa(idMesa);
+				
+				vista.tablaMesas().setModel(model.getModelMesas());
 			}
 		});
 		
@@ -68,21 +84,39 @@ public class AdminC {
 		vista.btnNewCategory().addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				NuevoEditarCategoriaC.nuevaCat();
+				editCat.nuevaCat();
 			}
 		});
 		//Botón Eliminar Categoría 
 		vista.btnDelCat().addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AdminM.delCat(getIdCat());
+				DefaultTableModel tableModel = (DefaultTableModel) vista.tableCat().getModel();
+
+				idCat = (int) tableModel.getValueAt(vista.tableCat().getSelectedRow(), 0);
+				
+				model.delCat(idCat);
+				
+				vista.tableCat().setModel(model.getModelCategorias());
 			}
 		});
 		//Botón Modificar Categoría
 		vista.btnEditCat().addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				NuevoEditarCategoriaC.editCat(getIdCat(), NuevoEditarCategoriaM.nombreCat());
+				DefaultTableModel tableModel = (DefaultTableModel) vista.tableCat().getModel();
+
+				idCat = (int) tableModel.getValueAt(vista.tableCat().getSelectedRow(), 0);
+				String nombreCat = (String) tableModel.getValueAt(vista.tableCat().getSelectedRow(), 1);
+				editCat.editCat(idCat, nombreCat);
+			}
+		});
+		//Botón Refrescar Categorias
+		vista.btnRefrescarCat().addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				vista.tableCat().setModel(model.getModelCategorias());
 			}
 		});
 		
@@ -93,54 +127,28 @@ public class AdminC {
 		vista.btnNewProduct().addActionListener(new ActionListener() {
 			@Override
 		  	public void actionPerformed(ActionEvent e) {
-				System.out.println("hey");
-		  		NuevoEditarProductoC.nuevoProd();
+				editProd.nuevoProd();
 		  	}
 		});
 		//Boton Eliminar Producto
 		vista.btnDelProd().addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AdminM.delProd(NuevoEditarProductoM.idProd());
+				model.delProd(idProd);
 			}
 		});
 		// Boton Modificar Producto 
 		vista.btnEditProd().addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				NuevoEditarProductoC.editProd(0);
+				editProd.editProd(idProd);
 			}
 		});
 		
 		//--------------------------------------------------------------
 	}
 	
-	private static void cerrarVista() {
+	private void cerrarVista() {
 		vista.dispose();
-	}
-	private static Integer getId() {
-		AdminV.tablaMesas().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-		    @Override
-		    public void valueChanged(ListSelectionEvent event) {
-		        String numero = AdminV.tablaMesas().getValueAt(AdminV.tablaMesas().getSelectedRow(), 0).toString();
-		        id = Integer.parseInt(numero);
-		        
-		    }
-		});
-		return id;
-	}
-	private static Integer getIdCat() {
-		AdminV.tableCat().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-		    @Override
-		    public void valueChanged(ListSelectionEvent event) {
-		    	try {
-		        id = (int) AdminV.tableCat().getValueAt(AdminV.tableCat().getSelectedRow(), 0);
-		    	}catch (Exception exe) {
-		    		
-		    	}
-		    }
-		});
-		System.out.println(id);
-		return id;
 	}
 }

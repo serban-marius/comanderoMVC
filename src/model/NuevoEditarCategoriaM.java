@@ -3,21 +3,51 @@ package model;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import vista.AdminV;
+import javax.swing.table.TableModel;
+
 import model.AdminM;
 
 public class NuevoEditarCategoriaM {
+	private AdminM model = null;
 	
-	public static String nombreCat() {
-		//Metodo para coger nombre categoria de la DB
-		return "Nombre categoria";
+	public void newCat(String newCat) {
+		model = new AdminM();
+		TableModel tableModel = model.getModelCategorias();
+		String sql = null;
+		int nextId;
+		
+		try {
+			nextId = (int) tableModel.getValueAt(tableModel.getRowCount() - 1, 0) + 1;
+			sql = "insert into " + conexionDB.getDatabase() + ".categorias values (" + nextId + ", '" + newCat + "')";
+		}catch (Exception e) {
+			sql = "insert into " + conexionDB.getDatabase() + ".categorias values (" + 1 + ", '" + newCat + "')";
+		}
+		conexionDB.openConnection();
+		Statement statement = null;
+		try {
+			statement = conexionDB.getConnection().createStatement();
+			statement.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+		    try { if (statement != null) statement.close(); } catch (Exception e) {};
+		    try { if (conexionDB.getConnection() != null) conexionDB.closeConnection(); } catch (Exception e) {};
+		}
 	}
-	
-	public static void editCat(int id, String nameCat) {
-		//Metodo para editar nombre de una categoria
-	}
-	
-	public static void newCat(String newCat) {
-		//Metodo para crear una nueva categoria
+
+	public void editCat(int id, String nameCat) {
+		// TODO Auto-generated method stub
+		String sql = "update " + conexionDB.getDatabase() + ".categorias set nombre = '" + nameCat + "' where id = " + id;
+		conexionDB.openConnection();
+		Statement statement = null;
+		try {
+			statement = conexionDB.getConnection().createStatement();
+			statement.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+		    try { if (statement != null) statement.close(); } catch (Exception e) {};
+		    try { if (conexionDB.getConnection() != null) conexionDB.closeConnection(); } catch (Exception e) {};
+		}
 	}
 }

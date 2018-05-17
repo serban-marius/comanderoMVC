@@ -5,13 +5,19 @@ import java.awt.event.ActionListener;
 
 import vista.NuevoEditarCategoriaV;
 import model.NuevoEditarCategoriaM;
+import controlador.AdminC;
 
 public class NuevoEditarCategoriaC {
-	private static NuevoEditarCategoriaV nuevaCate = null;
-	private static String nombreNuevaCat = "";
+	private NuevoEditarCategoriaV nuevaCate = null;
+	private NuevoEditarCategoriaM nuevaCateM = null;
+	private AdminC vista = null;
+	private String nombreNuevaCat = "";
+	private int id;
 	
-	public static void nuevaCat() {
+	public void nuevaCat() {
 		nuevaCate = new NuevoEditarCategoriaV();
+		nuevaCateM = new NuevoEditarCategoriaM();
+		vista = new AdminC();
 		
 		//Eventos de la ventana
 		// ---- BOTON VOLVER ----------
@@ -26,14 +32,15 @@ public class NuevoEditarCategoriaC {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				nombreNuevaCat = nuevaCate.textNewCat().getText();
-				NuevoEditarCategoriaM.newCat(nombreNuevaCat);
+				nuevaCateM.newCat(nombreNuevaCat);
+				cerrarVista();
 			}
 		});
 	}
 	
-	public static void editCat(Integer id, String nombreActual) {
+	public void editCat(Integer idca, String nombreActual) {
 		nuevaCate = new NuevoEditarCategoriaV();
-		
+		nuevaCateM = new NuevoEditarCategoriaM();
 		nuevaCate.textNewCat().setText(nombreActual);
 		
 		//Eventos de la ventana
@@ -49,12 +56,14 @@ public class NuevoEditarCategoriaC {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				nombreNuevaCat = nuevaCate.textNewCat().getText();
-				NuevoEditarCategoriaM.editCat(id, nombreNuevaCat);
+				id = idca;
+				nuevaCateM.editCat(id, nombreNuevaCat);
+				cerrarVista();
 			}
 		});
 	}
 	
-	public static void cerrarVista() {
+	public void cerrarVista() {
 		nuevaCate.dispose();
 	}
 

@@ -3,17 +3,10 @@ package vista;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-
-import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import model.AdminM;
 
@@ -25,9 +18,9 @@ public class AdminV extends JFrame{
 	private JPanel panel2;
 	private JPanel panel3;
 	private JTabbedPane panelDePestanas;
-	private static JTable tablaMesas;
-	public static JTable tableCat;
-	private static JTable tableProductos;
+	private JTable tablaMesas;
+	private JTable tableCat;
+	private  JTable tableProductos;
 	private JButton backButtonMesa;
 	private JButton btnAddMesa;
 	private JButton btnDelMesa;
@@ -42,10 +35,13 @@ public class AdminV extends JFrame{
 	private JButton btnBack;
 	private JButton btnNewCategory;
 	private JButton btnNewProduct;
+	private JButton btnRefrescarCat;
 	private JComboBox<?> comboBox;
+	private AdminM model = null;
 	
 	public AdminV() {
-		  
+		  model = new AdminM();
+		
 		  setTitle("Panel de Administración");
 		  setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		  setBounds(100, 100, 640, 458);
@@ -80,7 +76,7 @@ public class AdminV extends JFrame{
 		  panel1.add(scrollPaneMesas);
 		  
 		  tablaMesas = new JTable();
-		  tablaMesas.setModel(AdminM.getModelMesas());
+		  tablaMesas.setModel(model.getModelMesas());
 		  scrollPaneMesas.setViewportView(tablaMesas);
 		  
 		  //---------------------------------------------
@@ -95,11 +91,11 @@ public class AdminV extends JFrame{
 		  panel2.add(btnEditCat);
 		  
 		  scrollPaneCat = new JScrollPane();
-		  scrollPaneCat.setBounds(10, 11, 599, 273);
+		  scrollPaneCat.setBounds(10, 11, 485, 273);
 		  panel2.add(scrollPaneCat);
 		  
 		  tableCat = new JTable();
-		  tableCat.setModel(AdminM.getModelCategorias());
+		  tableCat.setModel(model.getModelCategorias());
 		  scrollPaneCat.setViewportView(tableCat);
 		  
 		  btnBackCat = new JButton("Volver");
@@ -113,6 +109,10 @@ public class AdminV extends JFrame{
 		  btnNewCategory = new JButton("Categor\u00EDa Nueva");
 		  btnNewCategory.setBounds(10, 295, 169, 48);
 		  panel2.add(btnNewCategory);
+		  
+		  btnRefrescarCat = new JButton("Refrescar");
+		  btnRefrescarCat.setBounds(505, 11, 104, 273);
+		  panel2.add(btnRefrescarCat);
 		  
 		  //---------------------------------------------
 		  
@@ -168,13 +168,13 @@ public class AdminV extends JFrame{
 	public JTabbedPane panelDePestanas() {
 		return panelDePestanas;
 	}
-	public static JTable tablaMesas() {
+	public JTable tablaMesas() {
 		return tablaMesas;
 	}
-	public static JTable tableCat() {
+	public JTable tableCat() {
 		return tableCat;
 	}
-	public static JTable tableProductos() {
+	public JTable tableProductos() {
 		return tableProductos;
 	}
 	public JButton backButtonMesa() {
@@ -221,5 +221,12 @@ public class AdminV extends JFrame{
 	}
 	public JComboBox<?> comboBox() {
 		return comboBox;
+	}
+	public JButton btnRefrescarCat() {
+		return btnRefrescarCat;
+	}
+	public AbstractButton btnRefrescarCat() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
