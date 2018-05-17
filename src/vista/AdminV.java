@@ -3,7 +3,6 @@ package vista;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -36,7 +35,8 @@ public class AdminV extends JFrame{
 	private JButton btnNewCategory;
 	private JButton btnNewProduct;
 	private JButton btnRefrescarCat;
-	private JComboBox<?> comboBox;
+	private JButton btnRefresh;
+	private JComboBox<String> comboBox;
 	private AdminM model = null;
 	
 	public AdminV() {
@@ -126,10 +126,11 @@ public class AdminV extends JFrame{
 		  panel3.add(btnEditProd);
 		  
 		  scrollPaneTablaProd = new JScrollPane();
-		  scrollPaneTablaProd.setBounds(10, 50, 599, 237);
+		  scrollPaneTablaProd.setBounds(10, 11, 481, 276);
 		  panel3.add(scrollPaneTablaProd);
 		  
 		  tableProductos = new JTable();
+		  tableProductos.setModel(model.getModelProductos());
 		  scrollPaneTablaProd.setViewportView(tableProductos);
 		  
 		  btnDelProd = new JButton("Eliminar Producto");
@@ -144,9 +145,14 @@ public class AdminV extends JFrame{
 		  btnNewProduct.setBounds(10, 298, 165, 46);
 		  panel3.add(btnNewProduct);
 		  
-		  comboBox = new JComboBox<String>();
+		  btnRefresh = new JButton("Refescar Datos");
+		  btnRefresh.setBounds(501, 8, 108, 279);
+		  panel3.add(btnRefresh);
+		  
+		  /*comboBox = new JComboBox<String>();
+		  comboBox.setModel(model.getComboBoxModelCategorias());
 		  comboBox.setBounds(10, 11, 599, 28);
-		  panel3.add(comboBox);
+		  panel3.add(comboBox);*/
 		  
 		  setVisible(true);
 		  
@@ -219,14 +225,13 @@ public class AdminV extends JFrame{
 	public JButton btnNewProduct() {
 		return btnNewProduct;
 	}
-	public JComboBox<?> comboBox() {
+	public JComboBox<String> comboBox() {
 		return comboBox;
 	}
 	public JButton btnRefrescarCat() {
 		return btnRefrescarCat;
 	}
-	public AbstractButton btnRefrescarCat() {
-		// TODO Auto-generated method stub
-		return null;
+	public JButton btnRefresh() {
+		return btnRefresh;
 	}
 }

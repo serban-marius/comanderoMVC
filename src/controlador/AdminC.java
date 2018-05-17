@@ -9,16 +9,12 @@ import vista.AdminV;
 import model.AdminM;
 import controlador.NuevoEditarProductoC;
 import controlador.NuevoEditarCategoriaC;
-import model.NuevoEditarCategoriaM;
-import model.NuevoEditarProductoM;
 
 public class AdminC {
 	private AdminV vista = null;
 	private AdminM model = null;
 	private NuevoEditarCategoriaC editCat = null;
-	private NuevoEditarCategoriaM editCatM = null;
 	private NuevoEditarProductoC editProd = null;
-	private NuevoEditarProductoM editProdM = null;
 	private Integer idMesa = null;
 	private Integer idCat = null;
 	private Integer idProd = null;
@@ -27,9 +23,7 @@ public class AdminC {
 		model = new AdminM();
 		vista = new AdminV();
 		editCat = new NuevoEditarCategoriaC();
-		editCatM = new NuevoEditarCategoriaM();
 		editProd = new NuevoEditarProductoC();
-		editProdM = new NuevoEditarProductoM();
 		
 		// Eventos de la ventana
 		
@@ -134,14 +128,40 @@ public class AdminC {
 		vista.btnDelProd().addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				DefaultTableModel tableModel = (DefaultTableModel) vista.tableProductos().getModel();
+
+				idProd = (int) tableModel.getValueAt(vista.tableProductos().getSelectedRow(), 0);
+				
 				model.delProd(idProd);
+				
+				vista.tableProductos().setModel(model.getModelProductos());
+				
 			}
 		});
 		// Boton Modificar Producto 
 		vista.btnEditProd().addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				editProd.editProd(idProd);
+				DefaultTableModel tableModel = (DefaultTableModel) vista.tableProductos().getModel();
+
+				idProd = (int) tableModel.getValueAt(vista.tableProductos().getSelectedRow(), 0);
+				String nombre = (String) tableModel.getValueAt(vista.tableProductos().getSelectedRow(), 1);
+				double precio = (double) tableModel.getValueAt(vista.tableProductos().getSelectedRow(), 2);
+				int stock = (int) tableModel.getValueAt(vista.tableProductos().getSelectedRow(), 3);
+				idCat = model.getIdCat((String) tableModel.getValueAt(vista.tableProductos().getSelectedRow(), 4));
+				
+				editProd.editProd(idProd, nombre, precio, stock, idCat);
+				
+				vista.tableProductos().setModel(model.getModelProductos());
+			}
+		});
+		//Boton Refrescar Productos
+		vista.btnRefresh().addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+							
+				vista.tableProductos().setModel(model.getModelProductos());
+				
 			}
 		});
 		

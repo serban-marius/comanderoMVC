@@ -7,10 +7,7 @@ import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-import vista.AdminV;
-
 public class AdminM {
-	private AdminV vista = null;
 	
 	public TableModel getModelMesas() {
 		String[] columnasModel = {"ID", "Estado", "Total Cuenta"};
@@ -99,6 +96,40 @@ public class AdminM {
 		
 		return model;
 	}
+	
+	public TableModel getModelProductos() {
+		
+		String[] columnasModel = {"ID", "Nombre", "Precio", "Stock", "Categoría"};
+		DefaultTableModel model = new DefaultTableModel(null, columnasModel);
+		
+		Object[] rowData = new Object[columnasModel.length];
+		
+		conexionDB.openConnection();
+		Statement statement = null;
+		ResultSet resultSet = null;
+		try {
+		
+			statement = conexionDB.getConnection().createStatement();
+			resultSet = statement.executeQuery("select p.id_producto, p.nombre, p.precio, p.stock, c.nombre as categoria from " + conexionDB.getDatabase() + ".productos p, " + conexionDB.getDatabase() + ".categorias c where p.id_categoria = c.id order by p.id_producto asc");
+			
+			while(resultSet.next()) {
+				rowData[0] = resultSet.getInt("id_producto");
+				rowData[1] = resultSet.getString("nombre");
+				rowData[2] = resultSet.getDouble("precio");
+				rowData[3] = resultSet.getInt("stock");
+				rowData[4] = resultSet.getString("categoria");
+				model.addRow(rowData);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+		    try { if (resultSet != null) resultSet.close(); } catch (Exception e) {};
+		    try { if (statement != null) statement.close(); } catch (Exception e) {};
+		    try { if (conexionDB.getConnection() != null) conexionDB.closeConnection(); } catch (Exception e) {};
+		}
+		
+		return model;
+	}
 
 	public void addMesa() {
 		TableModel tableModel = getModelMesas();
@@ -154,17 +185,30 @@ public class AdminM {
 	}
 	
 	public void delProd(int id) {
-		String sql = "delete from " + conexionDB.getDatabase() + ".categorias where id = " + id;
+		String sql = "delete from " + conexionDB.getDatabase() + ".productos where id_producto = " + id;
 		conexionDB.openConnection();
 		Statement statement = null;
 		try {
 			statement = conexionDB.getConnection().createStatement();
 			statement.executeUpdate(sql);
-			vista.tablaMesas().setModel(getModelMesas());
 		} catch (SQLException e) {
 		} finally {
 		    try { if (statement != null) statement.close(); } catch (Exception e) {};
 		    try { if (conexionDB.getConnection() != null) conexionDB.closeConnection(); } catch (Exception e) {};
 		}
+	}
+	
+	public Integer getIdCat(String valueAt) {
+		conexionDB.openConnection();
+		Statement statement;
+		ResultSet resultSet;
+		int id_category = -1;
+		try {
+			statement = conexionDB.getConnection().createStatement();
+			resultSet = statement.executeQuery("select id from " + conexionDB.getDatabase() + ".categorias where nombre = '"+valueAt+"'");
+			resultSet.next();
+			id_category = resultSet.getInt("id");
+		}catch (SQLException e) {}
+		return id_category;
 	}
 }

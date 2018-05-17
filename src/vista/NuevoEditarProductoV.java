@@ -6,8 +6,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
+import model.NuevoEditarProductoM;
 
 public class NuevoEditarProductoV extends JFrame {
 	
@@ -23,8 +23,11 @@ public class NuevoEditarProductoV extends JFrame {
 	private JComboBox<String> comboBox;
 	private JButton btnSave;
 	private JButton btnVolver;
+	private NuevoEditarProductoM model = null;
 	
 	public NuevoEditarProductoV() {
+		model = new NuevoEditarProductoM();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 581, 165);
 		
@@ -64,6 +67,7 @@ public class NuevoEditarProductoV extends JFrame {
 		contentPane.add(lblCategora);
 		
 		comboBox = new JComboBox<String>();
+		comboBox.setModel(model.getComboBoxModelCategorias());
 		comboBox.setBounds(313, 33, 242, 20);
 		contentPane.add(comboBox);
 		

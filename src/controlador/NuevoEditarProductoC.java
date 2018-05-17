@@ -8,17 +8,19 @@ import model.NuevoEditarProductoM;
 
 public class NuevoEditarProductoC {
 	
-	private static NuevoEditarProductoV newProd = null;
-	private static int stock = 0;
-	private static int idProd = 0;
-	private static double precio = 0.0;
-	private static String nombre = "";
-	private static String preciostring = "";
-	private static String stockstring = "";
-	private static int categoria = 0;
+	private NuevoEditarProductoV newProd = null;
+	private int stock = 0;
+	private int idProd = 0;
+	private double precio = 0.0;
+	private String nombre = "";
+	private String preciostring = "";
+	private String stockstring = "";
+	private int categoria = 0;
+	private NuevoEditarProductoM model = null;
 	
 	public void nuevoProd() {
 		newProd = new NuevoEditarProductoV();
+		model = new NuevoEditarProductoM();
 		
 		//Eventos de la ventana
 		// ---- BOTON VOLVER ----------
@@ -35,20 +37,22 @@ public class NuevoEditarProductoC {
 				nombre = newProd.tfNombre().getText();
 				preciostring = newProd.tfPrecio().getText();
 				stockstring = newProd.tfStock().getText();
-				categoria = newProd.comboBox().getSelectedIndex();
+				categoria = newProd.comboBox().getSelectedIndex()+1;
 				converToInt(preciostring, stockstring);
-				NuevoEditarProductoM.newProd(nombre,stock,precio,categoria);
+				model.newProd(nombre, stock, precio, categoria);
+				cerrarVista();
 			}
 		});
 	}
 	
-	public void editProd(int id) {
+	public void editProd(Integer id, String nombr, double precio2, int stock2, Integer cat) {
 		newProd = new NuevoEditarProductoV();
+		model = new NuevoEditarProductoM();
 		
-		newProd.tfNombre().setText(NuevoEditarProductoM.nombreProd());
-		newProd.tfStock().setText(NuevoEditarProductoM.stockProducto());
-		newProd.tfPrecio().setText(NuevoEditarProductoM.precioProducto());
-		newProd.comboBox().setSelectedIndex(NuevoEditarProductoM.idCat());
+		newProd.tfNombre().setText(nombr);
+		newProd.tfStock().setText((String) ""+stock2);
+		newProd.tfPrecio().setText((String) ""+precio2);
+		newProd.comboBox().setSelectedIndex(cat - 1);
 		idProd = id;
 		
 		//Eventos de la ventana
@@ -68,16 +72,17 @@ public class NuevoEditarProductoC {
 				stockstring = newProd.tfStock().getText();
 				categoria = newProd.comboBox().getSelectedIndex();
 				converToInt(preciostring, stockstring);
-				NuevoEditarProductoM.editProd(nombre, stock,  precio, categoria, idProd);
+				model.editProd(nombre, stock,  precio, categoria+1, idProd);
+				cerrarVista();
 			}
 		});
 	}
 	
-	public static void cerrarVista() {
+	public void cerrarVista() {
 		newProd.dispose();
 	}
 	
-	public static void converToInt(String precios, String stocks) {
+	public void converToInt(String precios, String stocks) {
 		try {
 			precio = Double.parseDouble(preciostring);
 		}catch(Exception e) {

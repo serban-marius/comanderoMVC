@@ -5,19 +5,16 @@ import java.awt.event.ActionListener;
 
 import vista.NuevoEditarCategoriaV;
 import model.NuevoEditarCategoriaM;
-import controlador.AdminC;
 
 public class NuevoEditarCategoriaC {
 	private NuevoEditarCategoriaV nuevaCate = null;
 	private NuevoEditarCategoriaM nuevaCateM = null;
-	private AdminC vista = null;
 	private String nombreNuevaCat = "";
 	private int id;
 	
 	public void nuevaCat() {
 		nuevaCate = new NuevoEditarCategoriaV();
 		nuevaCateM = new NuevoEditarCategoriaM();
-		vista = new AdminC();
 		
 		//Eventos de la ventana
 		// ---- BOTON VOLVER ----------

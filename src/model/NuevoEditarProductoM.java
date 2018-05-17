@@ -1,33 +1,84 @@
 package model;
 
-public class NuevoEditarProductoM {
-	
-	public int idProd() {
-		//Metodo para sacar id Producto de la BD
-		return 1;
-	}
-	public static String nombreProd() {
-		//Metodo para sacar nombre Producto de la BD
-		return "Nombre producto";
-	}
-	public static String stockProducto() {
-		//Metodo para sacar stock de un Producto de a BD
-		return "10";
-	}
-	public static String precioProducto() {
-		//Metodo para sacar el precio de un Producto de la BD
-		return "1.0";
-	}
-	public static int idCat() {
-		//Metodo para devolver categoría de un producto de la BD
-		return 0;
-	}
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-	public static void newProd(String nombre, int stock, double precio, int id) {
-		//Metodo producto nuevo a la DB
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.TableModel;
+import model.AdminM;
+
+public class NuevoEditarProductoM {
+	private AdminM model;
+
+	public ComboBoxModel<String> getComboBoxModelCategorias() {
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+		
+		conexionDB.openConnection();
+		Statement statement = null;
+		ResultSet resultSet = null;
+		try {
+			statement = conexionDB.getConnection().createStatement();
+			resultSet = statement.executeQuery("select * from " + conexionDB.getDatabase() + ".categorias order by id asc");
+			while(resultSet.next()) {
+				model.addElement(resultSet.getString("nombre"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+		    try { if (resultSet != null) resultSet.close(); } catch (Exception e) {};
+		    try { if (statement != null) statement.close(); } catch (Exception e) {};
+		    try { if (conexionDB.getConnection() != null) conexionDB.closeConnection(); } catch (Exception e) {};
+		}
+		
+		return model;
 	}
 	
-	public static void editProd(String nombre, int stock, double precio, int idCat, int idProd) {
-		//Metodo editar producto de la DB
+	public void newProd(String nombre, int stock, double precio, int idCat) {
+		model = new AdminM();
+		TableModel tableModel = model.getModelProductos();
+		String sql = null;
+		Statement statement;
+		int nextId;
+		conexionDB.openConnection();
+		
+		try {
+			nextId = (int) tableModel.getValueAt(tableModel.getRowCount() - 1, 0) + 1;
+			System.out.println(nextId);
+			sql = "insert into " + conexionDB.getDatabase() + ".productos values ("+nextId+", "+idCat+", '"+nombre+"', "+stock+", "+precio+")";	
+		}catch (Exception e) {
+			sql = "insert into " + conexionDB.getDatabase() + ".productos values ("+1+", "+idCat+", '"+nombre+"', "+stock+", "+precio+")";	
+		}
+			
+		conexionDB.openConnection();
+		 statement = null;
+		try {
+			statement = conexionDB.getConnection().createStatement();
+			statement.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+		    try { if (statement != null) statement.close(); } catch (Exception e) {};
+		    try { if (conexionDB.getConnection() != null) conexionDB.closeConnection(); } catch (Exception exep) {};
+		}
+	}
+	
+	public void editProd(String nombre, int stock, double precio, int idCat, int idProd) {
+		conexionDB.openConnection();
+		Statement statement;
+		
+		String sql = "update " + conexionDB.getDatabase() + ".productos set nombre = '" + nombre + "',stock = " + stock + ", precio = " + precio + ", id_categoria = " + idCat + " where id_producto = " + idProd;		
+		conexionDB.openConnection();
+		 statement = null;
+		try {
+			statement = conexionDB.getConnection().createStatement();
+			statement.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+		    try { if (statement != null) statement.close(); } catch (Exception e) {};
+		    try { if (conexionDB.getConnection() != null) conexionDB.closeConnection(); } catch (Exception exep) {};
+		}
 	}
 }
