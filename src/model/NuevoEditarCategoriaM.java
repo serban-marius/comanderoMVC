@@ -12,7 +12,6 @@ public class NuevoEditarCategoriaM {
 	
 	public void newCat(String newCat) {
 		model = new AdminM();
-		conexionDB.openConnection();
 		TableModel tableModel = model.getModelCategorias();
 		String sql = null;
 		int nextId;
@@ -23,6 +22,7 @@ public class NuevoEditarCategoriaM {
 		}catch (Exception e) {
 			sql = "insert into " + conexionDB.getDatabase() + ".categorias values (" + 1 + ", '" + newCat + "')";
 		}
+		conexionDB.openConnection();
 		Statement statement = null;
 		try {
 			statement = conexionDB.getConnection().createStatement();
@@ -34,6 +34,7 @@ public class NuevoEditarCategoriaM {
 		    try { if (conexionDB.getConnection() != null) conexionDB.closeConnection(); } catch (Exception e) {};
 		}
 	}
+	
 
 	public void editCat(int id, String nameCat) {
 		// TODO Auto-generated method stub

@@ -1,8 +1,7 @@
 package controlador;
 
-import vista.CobroV;
-
 public class CobroC {
+@SuppressWarnings("unused")
 private static CobroC start = null;
 	
 	public void generarCobro(){
